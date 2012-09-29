@@ -20,9 +20,22 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 @WebServlet("/SendInfo")
 public class SendInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String TAG = "SendInfo";
+	public static final String USER_NAME="USER_NAME";
+	public static final String LAT="LAT";
+	public static final String LNG="LNG";
+	public static final String COMMENT="COMMENT";
+	public static final String CAUTION_TYPE="CAUTION_TYPE";
+	
 	private boolean isMultipart=false;
 	private ServletContext context;
 	private Date now;
+	private String userName;
+	private double lat;
+	private double lng;
+	private String comment;
+	private short cautionType;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,14 +49,20 @@ public class SendInfo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		System.out.println(TAG+":doPost");
 	}
 
 	private void analyzeRequest(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		isMultipart=ServletFileUpload.isMultipartContent(request);
+		userName=request.getParameter(USER_NAME);
+		lat=Double.parseDouble(request.getParameter(LAT));
+		lng=Double.parseDouble(request.getParameter(LNG));
+		cautionType=Short.parseShort(request.getParameter(CAUTION_TYPE));
+		comment=request.getParameter(COMMENT);
 		
 		
+		    
 	}
 
 	/**
@@ -51,8 +70,8 @@ public class SendInfo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		analyzeRequest(request);
-		
+//		analyzeRequest(request);
+		System.out.println(TAG+":doPost");
 		now=new Date();
 		context=getServletContext();
 		File imagesFolder=(File) context.getAttribute(ServletListener.IMAGES_FOLDER);
